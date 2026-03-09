@@ -95,12 +95,38 @@ def alternar_voto(cargo, candidato, limite):
     elif len(lista_atual) < limite: lista_atual.append(candidato) 
     else: st.toast(f"⚠️ Máximo de {limite} selecionado!", icon="⚠️")
 
-tela_params = st.query_params.get("tela", "urna")
+# Alterado o default para "home"
+tela_params = st.query_params.get("tela", "home")
+
+# ==========================================
+# PÁGINA INICIAL
+# ==========================================
+if tela_params == "home":
+    mostrar_cabecalho("Sistema de Eleição IPB")
+    st.write("---")
+    st.markdown("### Selecione uma opção para continuar:")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        if st.button("🗳️ ACESSAR URNA", use_container_width=True, type="primary"):
+            st.query_params["tela"] = "urna"
+            st.rerun()
+            
+    with col2:
+        if st.button("📊 VER RESULTADOS", use_container_width=True, type="primary"):
+            st.query_params["tela"] = "resultados"
+            st.rerun()
+            
+    with col3:
+        if st.button("⚙️ CONFIGURAÇÕES", use_container_width=True, type="secondary"):
+            st.query_params["tela"] = "config"
+            st.rerun()
 
 # ==========================================
 # MODO 1: URNA
 # ==========================================
-if tela_params == "urna":
+elif tela_params == "urna":
     if st.session_state.etapa == 'votacao':
         mostrar_cabecalho("Eleição de Oficiais")
         st.subheader(f"1. Presbíteros (Escolha até {config['vagas_p']})")
