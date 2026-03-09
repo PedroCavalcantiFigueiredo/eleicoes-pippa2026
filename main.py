@@ -1,5 +1,5 @@
 import streamlit as st
-import pd as pd
+import pandas as pd
 import plotly.express as px
 import os
 import time
@@ -26,12 +26,13 @@ def salvar_config(config_dict):
     with open(ARQUIVO_CONFIG, "w", encoding="utf-8") as f:
         json.dump(config_dict, f, ensure_ascii=False, indent=4)
 
+# Inicializa configurações
 config = carregar_config()
 
 # --- CONFIGURAÇÃO DA PÁGINA ---
 st.set_page_config(page_title="Eleição IPB", page_icon="🗳️", layout="wide", initial_sidebar_state="collapsed")
 
-# --- ESTILIZAÇÃO ---
+# --- ESTILIZAÇÃO (CSS Personalizado) ---
 st.markdown("""
     <style>
     [data-testid="collapsedControl"] { display: none; }
@@ -40,8 +41,10 @@ st.markdown("""
     .block-container { padding-top: 1rem !important; padding-bottom: 2rem !important; }
     .stApp { background-color: #f2f7f4; }
     
+    /* Títulos Principais */
     h1, h2, h3 { color: #0e4a30 !important; font-family: 'Arial', sans-serif; }
     
+    /* MUDANÇA AQUI: Cor das Labels (Rótulos dos campos) */
     [data-testid="stWidgetLabel"] p {
         color: #0e4a30 !important; 
         font-weight: bold !important;
@@ -55,16 +58,6 @@ st.markdown("""
     
     div.stButton > button[kind="primary"] { background-color: #0e4a30; color: white; border-radius: 8px; font-weight: bold; }
     div.stButton > button[kind="secondary"] { background-color: #595959; color: white; border-radius: 8px; font-weight: bold; }
-    
-    /* Estilo especial para os cards do menu inicial */
-    .menu-card {
-        background-color: white;
-        padding: 20px;
-        border-radius: 15px;
-        border: 2px solid #0e4a30;
-        text-align: center;
-        margin-bottom: 10px;
-    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -102,42 +95,12 @@ def alternar_voto(cargo, candidato, limite):
     elif len(lista_atual) < limite: lista_atual.append(candidato) 
     else: st.toast(f"⚠️ Máximo de {limite} selecionado!", icon="⚠️")
 
-# Lógica de Navegação
-tela_params = st.query_params.get("tela", "menu")
-
-# ==========================================
-# PÁGINA INICIAL: MENU DO MESÁRIO
-# ==========================================
-if tela_params == "menu":
-    mostrar_cabecalho("Painel de Controle da Eleição")
-    st.divider()
-    
-    st.markdown("### Selecione o modo de operação:")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown('<div class="menu-card"><h3>🗳️ Urna</h3><p>Modo de votação para os eleitores.</p></div>', unsafe_allow_html=True)
-        if st.button("ABRIR VOTAÇÃO", type="primary", use_container_width=True):
-            st.query_params["tela"] = "urna"
-            st.rerun()
-            
-    with col2:
-        st.markdown('<div class="menu-card"><h3>📊 Telão</h3><p>Exibição dos resultados em tempo real.</p></div>', unsafe_allow_html=True)
-        if st.button("EXIBIR RESULTADOS", type="primary", use_container_width=True):
-            st.query_params["tela"] = "resultados"
-            st.rerun()
-            
-    with col3:
-        st.markdown('<div class="menu-card"><h3>⚙️ Ajustes</h3><p>Configurar candidatos, vagas e fotos.</p></div>', unsafe_allow_html=True)
-        if st.button("CONFIGURAÇÕES", type="secondary", use_container_width=True):
-            st.query_params["tela"] = "config"
-            st.rerun()
+tela_params = st.query_params.get("tela", "urna")
 
 # ==========================================
 # MODO 1: URNA
 # ==========================================
-elif tela_params == "urna":
+if tela_params == "urna":
     if st.session_state.etapa == 'votacao':
         mostrar_cabecalho("Eleição de Oficiais")
         st.subheader(f"1. Presbíteros (Escolha até {config['vagas_p']})")
@@ -165,12 +128,8 @@ elif tela_params == "urna":
                     if st.button(label, key=f"d_{cand}", type=tipo, use_container_width=True):
                         alternar_voto('votos_d', cand, config['vagas_d']); st.rerun()
 
-        st.divider()
-        c_v1, c_v2 = st.columns([4,1])
-        if c_v1.button("➡️ REVISAR MEUS VOTOS", type="primary", use_container_width=True):
+        if st.button("➡️ REVISAR MEUS VOTOS", type="primary", use_container_width=True):
             st.session_state.etapa = 'confirmacao'; st.rerun()
-        if c_v2.button("🏠 MENU", use_container_width=True):
-            st.query_params["tela"] = "menu"; st.rerun()
 
     elif st.session_state.etapa == 'confirmacao':
         mostrar_cabecalho("Confirme sua escolha")
@@ -197,16 +156,13 @@ elif tela_params == "urna":
 # MODO 2: RESULTADOS
 # ==========================================
 elif tela_params == "resultados":
-    col_l, col_t, col_b = st.columns([1, 2, 1])
+    col_l, col_t, col_b = st.columns([1, 3, 1])
     with col_l:
         if os.path.exists(NOME_LOGO): st.image(NOME_LOGO, width=200)
     with col_t: st.markdown("<h1 style='margin-top: 10px;'>📊 Resultados</h1>", unsafe_allow_html=True)
     with col_b:
-        col_b1, col_b2 = st.columns(2)
-        if col_b1.button("🏆 APURAR" if not st.session_state.mostrar_apuracao else "⬅️ VOLTAR", type="primary", use_container_width=True):
+        if st.button("🏆 APURAR" if not st.session_state.mostrar_apuracao else "⬅️ VOLTAR", type="primary"):
             st.session_state.mostrar_apuracao = not st.session_state.mostrar_apuracao; st.rerun()
-        if col_b2.button("🏠 MENU", use_container_width=True):
-            st.query_params["tela"] = "menu"; st.rerun()
     
     if os.path.exists(ARQUIVO_VOTOS):
         df = pd.read_csv(ARQUIVO_VOTOS)
@@ -240,7 +196,7 @@ elif tela_params == "resultados":
         time.sleep(8); st.rerun()
 
 # ==========================================
-# MODO 3: CONFIGURAÇÃO
+# MODO 3: CONFIGURAÇÃO (?tela=config)
 # ==========================================
 elif tela_params == "config":
     mostrar_cabecalho("Configurações")
@@ -268,9 +224,7 @@ elif tela_params == "config":
         with open(os.path.join("fotos", uplo.name), "wb") as f: f.write(uplo.getbuffer())
         st.success(f"Foto {uplo.name} salva!")
 
-    st.divider()
-    c_c1, c_c2 = st.columns(2)
-    if c_c1.button("🗑️ RESETAR TODOS OS VOTOS", use_container_width=True):
+    if st.button("🗑️ RESETAR TODOS OS VOTOS"):
         if os.path.exists(ARQUIVO_VOTOS): os.remove(ARQUIVO_VOTOS); st.error("Votos apagados!"); st.rerun()
-    if c_c2.button("🏠 VOLTAR AO MENU", use_container_width=True):
-        st.query_params["tela"] = "menu"; st.rerun()
+
+    st.markdown(f"[Ir para Urna](?tela=urna)")
