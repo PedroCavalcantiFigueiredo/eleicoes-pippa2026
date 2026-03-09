@@ -44,7 +44,7 @@ st.markdown("""
     /* Títulos Principais */
     h1, h2, h3 { color: #0e4a30 !important; font-family: 'Arial', sans-serif; }
     
-    /* MUDANÇA AQUI: Cor das Labels (Rótulos dos campos) */
+    /* Cor das Labels (Rótulos dos campos) */
     [data-testid="stWidgetLabel"] p {
         color: #0e4a30 !important; 
         font-weight: bold !important;
@@ -95,7 +95,6 @@ def alternar_voto(cargo, candidato, limite):
     elif len(lista_atual) < limite: lista_atual.append(candidato) 
     else: st.toast(f"⚠️ Máximo de {limite} selecionado!", icon="⚠️")
 
-# Alterado o default para "home"
 tela_params = st.query_params.get("tela", "home")
 
 # ==========================================
@@ -149,7 +148,7 @@ elif tela_params == "urna":
                 with st.container(border=True):
                     mostrar_foto(cand)
                     st.markdown(f'<p class="candidato-nome">{cand}</p>', unsafe_allow_html=True)
-                    label = "✅ OK" if cand in st.session_state.votos_d else "VOTAR"
+                    label = "Desmarcar" if cand in st.session_state.votos_d else "VOTAR"
                     tipo = "secondary" if cand in st.session_state.votos_d else "primary"
                     if st.button(label, key=f"d_{cand}", type=tipo, use_container_width=True):
                         alternar_voto('votos_d', cand, config['vagas_d']); st.rerun()
@@ -161,9 +160,18 @@ elif tela_params == "urna":
         mostrar_cabecalho("Confirme sua escolha")
         c1, c2 = st.columns(2)
         with c1: 
-            st.subheader("Presbíteros:"); [st.success(f"✔️ {v}") for v in st.session_state.votos_p]
+            st.subheader("Presbíteros:")
+            # Nomes em Verde Escuro e correção para evitar erro de array do Pandas
+            for v in st.session_state.votos_p:
+                st.markdown(f"<h3 style='color: #0e4a30; margin: 0;'>✔️ {v}</h3>", unsafe_allow_html=True)
+                
         with c2: 
-            st.subheader("Diáconos:"); [st.success(f"✔️ {v}") for v in st.session_state.votos_d]
+            st.subheader("Diáconos:")
+            # Nomes em Verde Escuro e correção para evitar erro de array do Pandas
+            for v in st.session_state.votos_d:
+                st.markdown(f"<h3 style='color: #0e4a30; margin: 0;'>✔️ {v}</h3>", unsafe_allow_html=True)
+
+        st.write("") # Espaçamento
         col_c1, col_c2 = st.columns(2)
         if col_c1.button("⬅️ CORRIGIR", use_container_width=True): st.session_state.etapa = 'votacao'; st.rerun()
         if col_c2.button("CONFIRMAR VOTO 🔒", type="primary", use_container_width=True):
@@ -187,7 +195,7 @@ elif tela_params == "resultados":
         if os.path.exists(NOME_LOGO): st.image(NOME_LOGO, width=200)
     with col_t: st.markdown("<h1 style='margin-top: 10px;'>📊 Resultados</h1>", unsafe_allow_html=True)
     with col_b:
-        if st.button("🏆 APURAR" if not st.session_state.mostrar_apuracao else "⬅️ VOLTAR", type="primary"):
+        if st.button("APURAR RESULTADOS" if not st.session_state.mostrar_apuracao else "⬅️ VOLTAR", type="primary"):
             st.session_state.mostrar_apuracao = not st.session_state.mostrar_apuracao; st.rerun()
     
     if os.path.exists(ARQUIVO_VOTOS):
@@ -217,7 +225,7 @@ elif tela_params == "resultados":
                         with cols[idx]:
                             with st.container(border=True):
                                 mostrar_foto(row['Candidato'])
-                                st.markdown(f"<p style='text-align:center'><b>{row['Candidato']}</b><br>{row['count']} votos</p>", unsafe_allow_html=True)
+                                st.markdown(f"<p style='text-align:center; color:#595959;'><b>{row['Candidato']}</b><br>{row['count']} votos</p>", unsafe_allow_html=True)
     if not st.session_state.mostrar_apuracao:
         time.sleep(8); st.rerun()
 
@@ -253,4 +261,4 @@ elif tela_params == "config":
     if st.button("🗑️ RESETAR TODOS OS VOTOS"):
         if os.path.exists(ARQUIVO_VOTOS): os.remove(ARQUIVO_VOTOS); st.error("Votos apagados!"); st.rerun()
 
-    st.markdown(f"[Ir para Urna](?tela=urna)")
+    st.markdown(f"[Voltar para Início](?tela=home)")
