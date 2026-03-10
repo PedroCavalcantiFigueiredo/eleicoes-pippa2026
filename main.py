@@ -115,7 +115,7 @@ elif tela == "urna":
                 with st.container(border=True):
                     st.image(buscar_foto_candidato(nome, "P"), use_container_width=True)
                     st.markdown(f'<p class="candidato-nome">{nome}</p>', unsafe_allow_html=True)
-                    label = "✅ OK" if nome in st.session_state.votos_p else "VOTAR"
+                    label = "Desmarcar" if nome in st.session_state.votos_p else "VOTAR"
                     tipo = "secondary" if nome in st.session_state.votos_p else "primary"
                     if st.button(label, key=f"p_{nome}", type=tipo, use_container_width=True):
                         if nome in st.session_state.votos_p: st.session_state.votos_p.remove(nome)
@@ -129,7 +129,7 @@ elif tela == "urna":
                 with st.container(border=True):
                     st.image(buscar_foto_candidato(nome, "D"), use_container_width=True)
                     st.markdown(f'<p class="candidato-nome">{nome}</p>', unsafe_allow_html=True)
-                    label = "✅ OK" if nome in st.session_state.votos_d else "VOTAR"
+                    label = "Desmarcar" if nome in st.session_state.votos_d else "VOTAR"
                     tipo = "secondary" if nome in st.session_state.votos_d else "primary"
                     if st.button(label, key=f"d_{nome}", type=tipo, use_container_width=True):
                         if nome in st.session_state.votos_d: st.session_state.votos_d.remove(nome)
@@ -189,7 +189,7 @@ elif tela == "resultados":
 
         if st.session_state.mostrar_apuracao:
             st.divider()
-            st.markdown("<h1 style='text-align: center;'>🎊 OFICIAIS ELEITOS 🎊</h1>", unsafe_allow_html=True)
+            st.markdown("<h1 style='text-align: center;'>OFICIAIS ELEITOS</h1>", unsafe_allow_html=True)
             for cargo, vagas, p_ref in zip(["Presbítero", "Diácono"], [config['vagas_p'], config['vagas_d']], ["P", "D"]):
                 st.markdown(f"### {vagas} {cargo}s Eleitos")
                 df_res = df[df['Cargo'] == cargo]
