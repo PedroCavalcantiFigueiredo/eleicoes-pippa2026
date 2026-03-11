@@ -1,66 +1,35 @@
-DataHora,Cargo,Candidato
-10/03/2026 19:39:20,Presbítero,Dantas
-10/03/2026 19:39:20,Presbítero,Cauã
-10/03/2026 19:39:20,Presbítero,Guido
-10/03/2026 19:39:20,Diácono,João Silva Leite - Copia (2)
-10/03/2026 19:39:20,Diácono,João Silva Leite - Copia (6)
-10/03/2026 19:39:43,Presbítero,Chernobas
-10/03/2026 19:39:43,Presbítero,Cauã
-10/03/2026 19:39:43,Presbítero,PH
-10/03/2026 19:39:43,Diácono,João Silva Leite
-10/03/2026 19:39:43,Diácono,João Silva Leite - Copia (3)
-10/03/2026 19:39:43,Diácono,João Silva Leite - Copia (5)
-10/03/2026 19:39:43,Diácono,João Silva Leite - Copia (2)
-10/03/2026 19:39:57,Presbítero,Chernobas
-10/03/2026 19:39:57,Presbítero,Cauã
-10/03/2026 19:39:57,Diácono,João Silva Leite - Copia (4)
-10/03/2026 19:40:13,Presbítero,Dantas
-10/03/2026 19:40:13,Presbítero,Guido
-10/03/2026 19:40:13,Diácono,João Silva Leite - Copia (6)
-10/03/2026 19:40:13,Diácono,João Silva Leite - Copia (5)
-10/03/2026 19:40:36,Presbítero,Gabriel Boechat
-10/03/2026 19:40:36,Presbítero,Dantas
-10/03/2026 19:40:36,Presbítero,Cauã
-10/03/2026 19:40:36,Diácono,João Silva Leite - Copia (4)
-10/03/2026 19:40:36,Diácono,João Silva Leite - Copia
-10/03/2026 19:40:36,Diácono,João Silva Leite - Copia (2)
-10/03/2026 19:40:36,Diácono,João Silva Leite - Copia (3)
-10/03/2026 19:42:12,Presbítero,Chernobas
-10/03/2026 19:42:12,Diácono,João Silva Leite - Copia
-10/03/2026 19:42:12,Diácono,João Silva Leite - Copia (4)
-10/03/2026 19:42:12,Diácono,João Silva Leite - Copia (6)
-10/03/2026 19:42:34,Presbítero,Guido
-10/03/2026 19:42:34,Presbítero,PH
-10/03/2026 19:42:34,Presbítero,Chernobas
-10/03/2026 19:42:34,Diácono,João Silva Leite
-10/03/2026 19:42:34,Diácono,João Silva Leite - Copia
-10/03/2026 19:42:34,Diácono,João Silva Leite - Copia (2)
-10/03/2026 19:42:55,Presbítero,Chernobas
-10/03/2026 19:42:55,Presbítero,Gabriel Boechat
-10/03/2026 19:42:55,Presbítero,Dantas
-10/03/2026 19:42:55,Diácono,João Silva Leite - Copia (3)
-10/03/2026 19:42:55,Diácono,João Silva Leite
-10/03/2026 19:43:13,Presbítero,Gabriel Boechat
-10/03/2026 19:43:13,Diácono,João Silva Leite - Copia (2)
-10/03/2026 19:43:13,Diácono,João Silva Leite - Copia (3)
-10/03/2026 19:43:13,Diácono,João Silva Leite
-10/03/2026 19:43:13,Diácono,João Silva Leite - Copia (5)
-10/03/2026 19:43:30,Presbítero,PH
-10/03/2026 19:43:30,Presbítero,Cauã
-10/03/2026 19:43:30,Diácono,João Silva Leite - Copia (6)
-10/03/2026 19:43:30,Diácono,João Silva Leite - Copia (5)
-10/03/2026 19:43:49,Presbítero,Guido
-10/03/2026 19:43:49,Presbítero,PH
-10/03/2026 19:43:49,Presbítero,Dantas
-10/03/2026 19:43:49,Diácono,João Silva Leite - Copia (2)
-10/03/2026 19:43:49,Diácono,João Silva Leite
-10/03/2026 19:44:07,Presbítero,Cauã
-10/03/2026 19:44:07,Presbítero,PH
-10/03/2026 19:44:07,Diácono,João Silva Leite - Copia (4)
-10/03/2026 19:44:07,Diácono,João Silva Leite
-10/03/2026 19:44:07,Diácono,João Silva Leite - Copia
-10/03/2026 19:44:26,Presbítero,Cauã
-10/03/2026 19:44:26,Presbítero,Chernobas
-10/03/2026 19:44:26,Diácono,João Silva Leite
-10/03/2026 19:44:26,Diácono,João Silva Leite - Copia (3)
-10/03/2026 19:44:26,Diácono,João Silva Leite - Copia (2)
+ID_Eleitor,DataHora,Cargo,Candidato
+cd1da500,11/03/2026 16:12:17,Presbítero,Cauã
+cd1da500,11/03/2026 16:12:17,Presbítero,Chernobas
+cd1da500,11/03/2026 16:12:17,Presbítero,Dantas
+cd1da500,11/03/2026 16:12:17,Diácono,João Silva Leite - Copia (2)
+cd1da500,11/03/2026 16:12:17,Diácono,João Silva Leite - Copia
+cd1da500,11/03/2026 16:12:17,Diácono,João Silva Leite - Copia (4)
+cd1da500,11/03/2026 16:12:17,Diácono,João Silva Leite - Copia (5)
+d2f91f2e,11/03/2026 16:13:03,Presbítero,Cauã
+d2f91f2e,11/03/2026 16:13:03,Presbítero,Chernobas
+d2f91f2e,11/03/2026 16:13:03,Presbítero,Dantas
+d2f91f2e,11/03/2026 16:13:03,Diácono,João Silva Leite - Copia
+d2f91f2e,11/03/2026 16:13:03,Diácono,João Silva Leite
+d2f91f2e,11/03/2026 16:13:03,Diácono,João Silva Leite - Copia (2)
+92971b54,11/03/2026 16:13:15,Presbítero,Cauã
+92971b54,11/03/2026 16:13:15,Presbítero,Chernobas
+92971b54,11/03/2026 16:13:15,Presbítero,Dantas
+92971b54,11/03/2026 16:13:15,Diácono,João Silva Leite - Copia (2)
+92971b54,11/03/2026 16:13:15,Diácono,João Silva Leite - Copia
+92971b54,11/03/2026 16:13:15,Diácono,João Silva Leite
+92971b54,11/03/2026 16:13:15,Diácono,João Silva Leite - Copia (3)
+34abf795,11/03/2026 16:13:28,Presbítero,Cauã
+34abf795,11/03/2026 16:13:28,Presbítero,Chernobas
+34abf795,11/03/2026 16:13:28,Presbítero,Dantas
+34abf795,11/03/2026 16:13:28,Diácono,João Silva Leite
+34abf795,11/03/2026 16:13:28,Diácono,João Silva Leite - Copia (2)
+34abf795,11/03/2026 16:13:28,Diácono,João Silva Leite - Copia (3)
+34abf795,11/03/2026 16:13:28,Diácono,João Silva Leite - Copia
+86048539,11/03/2026 16:13:40,Presbítero,Cauã
+86048539,11/03/2026 16:13:40,Presbítero,Chernobas
+86048539,11/03/2026 16:13:40,Presbítero,Dantas
+86048539,11/03/2026 16:13:40,Diácono,João Silva Leite
+86048539,11/03/2026 16:13:40,Diácono,João Silva Leite - Copia (2)
+86048539,11/03/2026 16:13:40,Diácono,João Silva Leite - Copia (3)
+86048539,11/03/2026 16:13:40,Diácono,João Silva Leite - Copia
