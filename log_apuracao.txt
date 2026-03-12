@@ -1,0 +1,30 @@
+[12/03/2026 12:11:41] APURAÇÃO REALIZADA
+Total de Eleitores: 6 | Quórum p/ Eleição (50%+1): 4
+ -> Presbíteros Eleitos: Chernobas, Dantas
+ -> Diáconos Eleitos: Elias
+--------------------------------------------------
+[12/03/2026 12:12:00] APURAÇÃO REALIZADA
+Total de Eleitores: 6 | Quórum p/ Eleição (50%+1): 4
+ -> Presbíteros Eleitos: Chernobas, Dantas
+ -> Diáconos Eleitos: Elias
+--------------------------------------------------
+[12/03/2026 12:12:28] APURAÇÃO REALIZADA
+Total de Eleitores: 6 | Quórum p/ Eleição (50%+1): 4
+ -> Presbíteros Eleitos: Chernobas, Dantas
+ -> Diáconos Eleitos: Elias
+--------------------------------------------------
+[12/03/2026 13:41:44] APURAÇÃO REALIZADA
+Total de Eleitores: 255 | Quórum p/ Eleição (50%+1): 128
+ -> Presbíteros Eleitos: Nenhum atingiu o quórum
+ -> Diáconos Eleitos: Nenhum atingiu o quórum
+--------------------------------------------------
+[12/03/2026 13:54:24] APURAÇÃO REALIZADA
+Total de Eleitores: 37 | Quórum p/ Eleição (50%+1): 19
+ -> Presbíteros Eleitos: Guido, Chernobas
+ -> Diáconos Eleitos: Nenhum atingiu o quórum
+--------------------------------------------------
+[12/03/2026 13:59:07] APURAÇÃO REALIZADA
+Total de Eleitores: 37 | Quórum p/ Eleição (50%+1): 19
+ -> Presbíteros Eleitos: Guido, Chernobas
+ -> Diáconos Eleitos: Nenhum atingiu o quórum
+--------------------------------------------------

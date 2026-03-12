@@ -308,7 +308,7 @@ elif tela == "urna":
         st.markdown("<h1 style='text-align:center; color:#0e4a30; margin-top:100px;'>🎉 VOTO REGISTRADO COM SUCESSO!</h1>", unsafe_allow_html=True)
         time.sleep(3)
         st.session_state.votos_p, st.session_state.votos_d, st.session_state.etapa = [], [], 'votacao'
-        st.query_params["tela"] = "home"
+        st.query_params["tela"] = "urna"
         st.rerun()
 
 # ==========================================
@@ -352,7 +352,7 @@ elif tela == "resultados":
 
         if st.session_state.mostrar_apuracao:
             st.divider()
-            st.markdown("<div style='background-color: #0e4a30; color: white; padding: 15px; border-radius: 10px; text-align: center;'><h1 style='color: white !important; margin: 0;'>OFICIAIS ELEITOS</h1></div>", unsafe_allow_html=True)
+            st.markdown("<div style='background-color: white; color: white; padding: 15px; border-radius: 10px; text-align: center;'><h1 style='color: white !important; margin: 0;'>OFICIAIS ELEITOS</h1></div>", unsafe_allow_html=True)
             
             eleitos_historico_p = []
             eleitos_historico_d = []
@@ -365,7 +365,7 @@ elif tela == "resultados":
                     cnt_eleitos = cnt[cnt['count'] >= quorum_necessario].head(vagas)
                     
                     if cnt_eleitos.empty:
-                        st.warning(f"Nenhum candidato a {cargo} alcançou o quórum necessário ({quorum_necessario} votos).")
+                        st.error(f"Nenhum candidato a {cargo} alcançou o quórum necessário ({quorum_necessario} votos).")
                     else:
                         cols_ap = st.columns(vagas)
                         for idx, row in cnt_eleitos.iterrows():
