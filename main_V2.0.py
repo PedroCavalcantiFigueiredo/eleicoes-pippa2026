@@ -49,40 +49,76 @@ st.set_page_config(page_title="Eleição PIPPA 2026", page_icon="🗳️", layou
 # --- ESTILO CSS ---
 st.markdown("""
     <style>
+    /* Esconder elementos padrão do Streamlit */
     [data-testid="collapsedControl"] { display: none; }
     header { visibility: hidden !important; }
     footer { visibility: hidden !important; }
     .block-container { padding-top: 1rem !important; }
-    .stApp { background-color: #f2f7f4; }
+    .stApp { background-color: #f2f7f4 !important; }
     h1, h2, h3 { color: #0e4a30 !important; font-family: 'Arial', sans-serif; }
     
-    /* Design dos Cards (Mudança 6) */
+    /* DESIGN DOS CARDS (Fundo Verde Claro, Borda Grossa e Sombra) */
     [data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #eaf3ee !important; 
+        border: 2px solid #0e4a30 !important; 
         border-radius: 12px !important;
-        background-color: #ffffff;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        border: 1px solid #e0e0e0 !important;
-        overflow: hidden;
+        padding: 10px !important;
+        box-shadow: 0px 6px 12px rgba(14, 74, 48, 0.2) !important;
+        transition: transform 0.2s ease-in-out !important;
     }
     
-    /* Design e Tamanho dos Botões - Remoção de Bordas (Mudanças 3 e 7) */
-    div.stButton > button {
-        height: 50px;
-        font-size: 16px !important;
-        border: none !important;
-        transition: 0.2s ease-in-out;
+    /* Efeito ao passar o mouse no Card */
+    [data-testid="stVerticalBlockBorderWrapper"]:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0px 10px 20px rgba(14, 74, 48, 0.4) !important;
     }
-    div.stButton > button:focus, div.stButton > button:active {
-        outline: none !important;
-        box-shadow: none !important;
-        border: none !important;
-        color: white !important;
-    }
-    div.stButton > button[kind="primary"] { background-color: #0e4a30; color: white; border-radius: 8px; font-weight: bold; }
-    div.stButton > button[kind="secondary"] { background-color: #8fa89b; color: white; border-radius: 8px; font-weight: bold; }
-    div.stButton > button[kind="secondary"]:hover { background-color: #d17575; color: white; }
     
-    .candidato-nome { text-align: center; font-weight: 900; color: #0e4a30; text-transform: uppercase; margin: 8px 0; font-size: 15px; }
+    /* BOTÃO PRIMÁRIO (VOTAR) - Verde Escuro */
+    button[kind="primary"], [data-testid="baseButton-primary"] {
+        background-color: #0e4a30 !important;
+        color: #ffffff !important;
+        border-radius: 8px !important;
+        height: 50px !important;
+        font-weight: 900 !important;
+        font-size: 18px !important;
+        border: none !important;
+        box-shadow: 0px 4px 6px rgba(0,0,0,0.2) !important;
+        width: 100% !important;
+    }
+    
+    /* Hover do Botão Primário */
+    button[kind="primary"]:hover, [data-testid="baseButton-primary"]:hover {
+        background-color: #1a754d !important;
+        color: #ffffff !important;
+    }
+
+    /* BOTÃO SECUNDÁRIO (DESMARCAR) - Cinza/Vermelho */
+    button[kind="secondary"], [data-testid="baseButton-secondary"] {
+        background-color: #8fa89b !important;
+        color: #ffffff !important;
+        border-radius: 8px !important;
+        height: 50px !important;
+        font-weight: 900 !important;
+        font-size: 18px !important;
+        border: none !important;
+        width: 100% !important;
+    }
+    
+    /* Hover do Botão Secundário */
+    button[kind="secondary"]:hover, [data-testid="baseButton-secondary"]:hover {
+        background-color: #d17575 !important;
+        color: #ffffff !important;
+    }
+    
+    /* Título do Candidato */
+    .candidato-nome { 
+        text-align: center; 
+        font-weight: 900; 
+        color: #0e4a30; 
+        text-transform: uppercase; 
+        margin: 10px 0; 
+        font-size: 16px; 
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -93,7 +129,6 @@ def get_base64_image(image_path):
     return ""
 
 def mostrar_cabecalho(titulo=""):
-    # Mudança 4: Header com fundo diferente
     logo_b64 = get_base64_image(NOME_LOGO)
     img_tag = f'<img src="data:image/png;base64,{logo_b64}" width="150" style="margin-right: 20px;">' if logo_b64 else '<span style="font-size:30px; margin-right:20px;">Primeira Igreja Presbiteriana de Pouso Alegre</span>'
     
@@ -114,7 +149,7 @@ def buscar_foto_candidato(nome, cargo):
 def salvar_votos(p_escolhidos, d_escolhidos):
     novos = []
     agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    id_eleitor = str(uuid.uuid4())[:8] # Mudança 1: Identificador único por pessoa/envio
+    id_eleitor = str(uuid.uuid4())[:8]
     
     for p in p_escolhidos: novos.append({"ID_Eleitor": id_eleitor, "DataHora": agora, "Cargo": "Presbítero", "Candidato": p})
     for d in d_escolhidos: novos.append({"ID_Eleitor": id_eleitor, "DataHora": agora, "Cargo": "Diácono", "Candidato": d})
@@ -123,7 +158,6 @@ def salvar_votos(p_escolhidos, d_escolhidos):
     df_novo.to_csv(ARQUIVO_VOTOS, mode='a', index=False, header=not os.path.exists(ARQUIVO_VOTOS))
 
 def registrar_log_apuracao(total_eleitores, quorum_necessario, eleitos_p, eleitos_d):
-    # Mudança 8: Log histórico de apurações
     agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     with open(ARQUIVO_LOG, "a", encoding="utf-8") as f:
         f.write(f"[{agora}] APURAÇÃO REALIZADA\n")
@@ -147,9 +181,15 @@ if tela == "home":
     mostrar_cabecalho("Sistema de Eleição PIPPA 2026")
     st.markdown("### Selecione uma opção para continuar:")
     c1, c2, c3 = st.columns(3)
-    if c1.button("🗳️ ACESSAR URNA", use_container_width=True, type="primary"): st.query_params["tela"] = "urna"; st.rerun()
-    if c2.button("📊 VER RESULTADOS", use_container_width=True, type="primary"): st.query_params["tela"] = "resultados"; st.rerun()
-    if c3.button("⚙️ CONFIGURAÇÕES", use_container_width=True, type="secondary"): st.query_params["tela"] = "config"; st.rerun()
+    if c1.button("🗳️ ACESSAR URNA", use_container_width=True, type="primary"): 
+        st.query_params["tela"] = "urna"
+        st.rerun()
+    if c2.button("📊 VER RESULTADOS", use_container_width=True, type="primary"): 
+        st.query_params["tela"] = "resultados"
+        st.rerun()
+    if c3.button("⚙️ CONFIGURAÇÕES", use_container_width=True, type="secondary"): 
+        st.query_params["tela"] = "config"
+        st.rerun()
 
 # ==========================================
 # URNA
@@ -158,60 +198,118 @@ elif tela == "urna":
     if st.session_state.etapa == 'votacao':
         mostrar_cabecalho("Eleição de Oficiais")
         
-        # Mudança 5: Separação das votações com divs de fundo diferente
+        # --- PRESBÍTEROS ---
         st.markdown(f"<div style='background-color: #c4d9cc; padding: 10px 20px; border-radius: 8px; margin-bottom: 15px;'><h3 style='margin:0; color:#0e4a30;'>1. Presbíteros (Escolha até {config['vagas_p']})</h3></div>", unsafe_allow_html=True)
         cols_p = st.columns(6)
+        
         for i, nome in enumerate(config['candidatos_p']):
             with cols_p[i % 6]:
-                with st.container(border=True): # O CSS transforma isso em um card (Mudança 6)
-                    st.image(buscar_foto_candidato(nome, "P"), use_container_width=True)
-                    st.markdown(f'<p class="candidato-nome">{nome}</p>', unsafe_allow_html=True)
-                    label = "Desmarcar" if nome in st.session_state.votos_p else "VOTAR"
-                    tipo = "secondary" if nome in st.session_state.votos_p else "primary"
-                    if st.button(label, key=f"p_{nome}", type=tipo, use_container_width=True):
-                        if nome in st.session_state.votos_p: st.session_state.votos_p.remove(nome)
-                        elif len(st.session_state.votos_p) < config['vagas_p']: st.session_state.votos_p.append(nome)
-                        st.rerun()
+                selecionado = nome in st.session_state.votos_p
+                
+                # Pegando a foto em base64 para o HTML
+                caminho_foto = buscar_foto_candidato(nome, "P")
+                foto_b64 = get_base64_image(caminho_foto)
+                # Fallback caso a foto não exista localmente
+                src_img = f"data:image/jpeg;base64,{foto_b64}" if foto_b64 else caminho_foto
+                
+                # Visual do Card (Muda a cor da borda e fundo se selecionado)
+                cor_borda = "#1a754d" if selecionado else "#0e4a30"
+                cor_fundo = "#d4e8dd" if selecionado else "#ffffff"
+                
+                # CARD HTML PURO (Imagem quadrada com aspect-ratio e object-fit: contain)
+                st.markdown(f"""
+                <div style="background-color: {cor_fundo}; border: 3px solid {cor_borda}; border-radius: 12px; padding: 10px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 10px;">
+                    <img src="{src_img}" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; object-fit: contain; background-color: transparent;">
+                    <h4 style="color: {cor_borda}; margin: 10px 0 5px 0; font-weight: 900; text-transform: uppercase;">{nome}</h4>
+                    {'<span style="background-color: #1a754d; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;">✅ SELECIONADO</span>' if selecionado else '<span style="color: transparent; font-size: 12px;">-</span>'}
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Botão logo abaixo do card HTML
+                label = "DESMARCAR" if selecionado else "VOTAR"
+                tipo = "secondary" if selecionado else "primary"
+                
+                if st.button(label, key=f"p_{nome}", type=tipo, use_container_width=True):
+                    if nome in st.session_state.votos_p: 
+                        st.session_state.votos_p.remove(nome)
+                    elif len(st.session_state.votos_p) < config['vagas_p']: 
+                        st.session_state.votos_p.append(nome)
+                    else:
+                        st.error("Vagas esgotadas!")
+                    st.rerun()
                         
         st.write("")
+        
+        # --- DIÁCONOS ---
         st.markdown(f"<div style='background-color: #e2e8e4; padding: 10px 20px; border-radius: 8px; margin-bottom: 15px; margin-top: 20px;'><h3 style='margin:0; color:#595959;'>2. Diáconos (Escolha até {config['vagas_d']})</h3></div>", unsafe_allow_html=True)
         cols_d = st.columns(6)
+        
         for i, nome in enumerate(config['candidatos_d']):
             with cols_d[i % 6]:
-                with st.container(border=True):
-                    st.image(buscar_foto_candidato(nome, "D"), use_container_width=True)
-                    st.markdown(f'<p class="candidato-nome">{nome}</p>', unsafe_allow_html=True)
-                    label = "Desmarcar" if nome in st.session_state.votos_d else "VOTAR"
-                    tipo = "secondary" if nome in st.session_state.votos_d else "primary"
-                    if st.button(label, key=f"d_{nome}", type=tipo, use_container_width=True):
-                        if nome in st.session_state.votos_d: st.session_state.votos_d.remove(nome)
-                        elif len(st.session_state.votos_d) < config['vagas_d']: st.session_state.votos_d.append(nome)
-                        st.rerun()
+                selecionado = nome in st.session_state.votos_d
+                
+                caminho_foto = buscar_foto_candidato(nome, "D")
+                foto_b64 = get_base64_image(caminho_foto)
+                src_img = f"data:image/jpeg;base64,{foto_b64}" if foto_b64 else caminho_foto
+                
+                cor_borda = "#8fa89b" if selecionado else "#595959"
+                cor_fundo = "#e8ecea" if selecionado else "#ffffff"
+                
+                # CARD HTML PURO (Imagem quadrada com aspect-ratio e object-fit: contain)
+                st.markdown(f"""
+                <div style="background-color: {cor_fundo}; border: 3px solid {cor_borda}; border-radius: 12px; padding: 10px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 10px;">
+                    <img src="{src_img}" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 8px; object-fit: contain; background-color: transparent;">
+                    <h4 style="color: {cor_borda}; margin: 10px 0 5px 0; font-weight: 900; text-transform: uppercase;">{nome}</h4>
+                    {'<span style="background-color: #8fa89b; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;">✅ SELECIONADO</span>' if selecionado else '<span style="color: transparent; font-size: 12px;">-</span>'}
+                </div>
+                """, unsafe_allow_html=True)
+                
+                label = "DESMARCAR" if selecionado else "VOTAR"
+                tipo = "secondary" if selecionado else "primary"
+                
+                if st.button(label, key=f"d_{nome}", type=tipo, use_container_width=True):
+                    if nome in st.session_state.votos_d: 
+                        st.session_state.votos_d.remove(nome)
+                    elif len(st.session_state.votos_d) < config['vagas_d']: 
+                        st.session_state.votos_d.append(nome)
+                    else:
+                        st.error("Vagas esgotadas!")
+                    st.rerun()
                         
         st.write("---")
-        if st.button("➡️ REVISAR MEUS VOTOS", type="primary", use_container_width=True): st.session_state.etapa = 'confirmacao'; st.rerun()
+        if st.button("➡️ REVISAR MEUS VOTOS", type="primary", use_container_width=True): 
+            st.session_state.etapa = 'confirmacao'
+            st.rerun()
 
     elif st.session_state.etapa == 'confirmacao':
         mostrar_cabecalho("Confirme sua escolha")
         c1, c2 = st.columns(2)
         with c1:
             st.markdown("<div style='background-color: #c4d9cc; padding: 10px; border-radius: 8px;'><h3>Presbíteros:</h3></div>", unsafe_allow_html=True)
-            for v in st.session_state.votos_p: st.markdown(f"<h4 style='color: #0e4a30; margin: 10px 0;'>✔️ {v}</h4>", unsafe_allow_html=True)
+            for v in st.session_state.votos_p: 
+                st.markdown(f"<h4 style='color: #0e4a30; margin: 10px 0;'>✔️ {v}</h4>", unsafe_allow_html=True)
         with c2:
             st.markdown("<div style='background-color: #e2e8e4; padding: 10px; border-radius: 8px;'><h3>Diáconos:</h3></div>", unsafe_allow_html=True)
-            for v in st.session_state.votos_d: st.markdown(f"<h4 style='color: #0e4a30; margin: 10px 0;'>✔️ {v}</h4>", unsafe_allow_html=True)
+            for v in st.session_state.votos_d: 
+                st.markdown(f"<h4 style='color: #0e4a30; margin: 10px 0;'>✔️ {v}</h4>", unsafe_allow_html=True)
         
         st.write("")
         cb1, cb2 = st.columns(2)
-        if cb1.button("⬅️ CORRIGIR", use_container_width=True): st.session_state.etapa = 'votacao'; st.rerun()
+        if cb1.button("⬅️ CORRIGIR", use_container_width=True): 
+            st.session_state.etapa = 'votacao'
+            st.rerun()
         if cb2.button("CONFIRMAR VOTO 🔒", type="primary", use_container_width=True):
             salvar_votos(st.session_state.votos_p, st.session_state.votos_d)
-            st.session_state.etapa = 'agradecimento'; st.rerun()
+            st.session_state.etapa = 'agradecimento'
+            st.rerun()
 
     elif st.session_state.etapa == 'agradecimento':
         st.balloons()
         st.markdown("<h1 style='text-align:center; color:#0e4a30; margin-top:100px;'>🎉 VOTO REGISTRADO COM SUCESSO!</h1>", unsafe_allow_html=True)
-        time.sleep(3); st.session_state.votos_p, st.session_state.votos_d, st.session_state.etapa = [], [], 'votacao'; st.rerun()
+        time.sleep(3)
+        st.session_state.votos_p, st.session_state.votos_d, st.session_state.etapa = [], [], 'votacao'
+        st.query_params["tela"] = "home"
+        st.rerun()
 
 # ==========================================
 # RESULTADOS
@@ -229,11 +327,10 @@ elif tela == "resultados":
     if os.path.exists(ARQUIVO_VOTOS):
         df = pd.read_csv(ARQUIVO_VOTOS)
         
-        # Mudança 1 e 2: Lógica de 50% + 1 pessoa
         if 'ID_Eleitor' in df.columns:
             total_eleitores = df['ID_Eleitor'].nunique()
         else:
-            total_eleitores = 0 # Fallback caso o CSV seja antigo sem a coluna
+            total_eleitores = 0 
             
         quorum_necessario = (total_eleitores // 2) + 1
         
@@ -250,13 +347,12 @@ elif tela == "resultados":
                     fig.update_layout(plot_bgcolor='white', paper_bgcolor='white', margin=dict(t=30, b=20, l=20, r=20))
                     fig.update_traces(textposition='outside', textfont=dict(size=14, color=color))
                     fig.update_xaxes(tickfont=dict(color="#333333", size=12, family="Arial Black"))
-                    # Adiciona linha de quórum no gráfico
                     fig.add_hline(y=quorum_necessario, line_dash="dash", line_color="red", annotation_text="50%+1")
                     st.plotly_chart(fig, use_container_width=True)
 
         if st.session_state.mostrar_apuracao:
             st.divider()
-            st.markdown("<div style='background-color: white; color: white; padding: 15px; border-radius: 10px; text-align: center;'><h1 style='color: white; !important; margin: 0;'>OFICIAIS ELEITOS</h1></div>", unsafe_allow_html=True)
+            st.markdown("<div style='background-color: #0e4a30; color: white; padding: 15px; border-radius: 10px; text-align: center;'><h1 style='color: white !important; margin: 0;'>OFICIAIS ELEITOS</h1></div>", unsafe_allow_html=True)
             
             eleitos_historico_p = []
             eleitos_historico_d = []
@@ -265,7 +361,6 @@ elif tela == "resultados":
                 st.markdown(f"### {cargo}s (Vagas: {vagas})")
                 df_res = df[df['Cargo'] == cargo]
                 if not df_res.empty:
-                    # Aplica a regra do quórum de 50%+1
                     cnt = df_res['Candidato'].value_counts().reset_index()
                     cnt_eleitos = cnt[cnt['count'] >= quorum_necessario].head(vagas)
                     
@@ -281,12 +376,12 @@ elif tela == "resultados":
                                     st.image(buscar_foto_candidato(row['Candidato'], p_ref), use_container_width=True)
                                     st.markdown(f"<p style='text-align:center; color:#595959; font-size: 18px;'><b>{row['Candidato']}</b><br><span style='color: #0e4a30;'>{row['count']} votos</span></p>", unsafe_allow_html=True)
             
-            # Registrar no log automaticamente (Mudança 8)
             registrar_log_apuracao(total_eleitores, quorum_necessario, eleitos_historico_p, eleitos_historico_d)
             st.success(f"Apuração registrada no histórico (`{ARQUIVO_LOG}`).")
 
     if not st.session_state.mostrar_apuracao:
-        time.sleep(8); st.rerun()
+        time.sleep(8)
+        st.rerun()
 
 # ==========================================
 # CONFIGURAÇÕES
@@ -298,7 +393,10 @@ elif tela == "config":
         v_p = c1.number_input("Vagas Presbítero", value=config['vagas_p'], min_value=1)
         v_d = c2.number_input("Vagas Diácono", value=config['vagas_d'], min_value=1)
         if st.form_submit_button("SALVAR VAGAS"):
-            salvar_config(v_p, v_d); st.success("Salvo!"); time.sleep(1); st.rerun()
+            salvar_config(v_p, v_d)
+            st.success("Salvo!")
+            time.sleep(1)
+            st.rerun()
     st.divider()
     
     st.subheader("📸 Upload de Fotos")
@@ -307,20 +405,28 @@ elif tela == "config":
         u_p = st.file_uploader("Foto Presbítero", type=["jpg", "png", "jpeg"], key="up_p")
         if u_p:
             with open(os.path.join(PASTA_P, u_p.name), "wb") as f: f.write(u_p.getbuffer())
-            st.success("Salvo em Presbíteros!"); time.sleep(1); st.rerun()
+            st.success("Salvo em Presbíteros!")
+            time.sleep(1)
+            st.rerun()
     with up2:
         u_d = st.file_uploader("Foto Diácono", type=["jpg", "png", "jpeg"], key="up_d")
         if u_d:
             with open(os.path.join(PASTA_D, u_d.name), "wb") as f: f.write(u_d.getbuffer())
-            st.success("Salvo em Diáconos!"); time.sleep(1); st.rerun()
+            st.success("Salvo em Diáconos!")
+            time.sleep(1)
+            st.rerun()
     st.divider()
     
     st.subheader("⚠️ Área de Perigo")
     c_del1, c_del2 = st.columns(2)
     if c_del1.button("🗑️ RESETAR VOTOS", type="primary"):
-        if os.path.exists(ARQUIVO_VOTOS): os.remove(ARQUIVO_VOTOS); st.rerun()
+        if os.path.exists(ARQUIVO_VOTOS): 
+            os.remove(ARQUIVO_VOTOS)
+            st.rerun()
     if c_del2.button("🗑️ LIMPAR LOG DE APURAÇÃO"):
-        if os.path.exists(ARQUIVO_LOG): os.remove(ARQUIVO_LOG); st.rerun()
+        if os.path.exists(ARQUIVO_LOG): 
+            os.remove(ARQUIVO_LOG)
+            st.rerun()
         
     st.write("---")
     st.button("⬅️ VOLTAR PARA HOME", on_click=lambda: st.query_params.update(tela="home"), use_container_width=True)

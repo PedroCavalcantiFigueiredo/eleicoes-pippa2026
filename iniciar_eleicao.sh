@@ -28,7 +28,7 @@ echo "Acesse: http://localhost:8501"
 echo ""
 
 # Roda o Streamlit de dentro do venv
-streamlit run main.py
+streamlit run main_V2.0.py
 
 # Se o processo fechar, desativa o venv
 deactivate
