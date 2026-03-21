@@ -28,3 +28,13 @@ Total de Eleitores: 37 | Quórum p/ Eleição (50%+1): 19
  -> Presbíteros Eleitos: Guido, Chernobas
  -> Diáconos Eleitos: Nenhum atingiu o quórum
 --------------------------------------------------
+[12/03/2026 21:07:11] APURAÇÃO REALIZADA
+Total de Eleitores: 38 | Quórum p/ Eleição (50%+1): 20
+ -> Presbíteros Eleitos: Chernobas
+ -> Diáconos Eleitos: Nenhum atingiu o quórum
+--------------------------------------------------
+[21/03/2026 00:35:50] APURAÇÃO REALIZADA
+Total de Eleitores: 107 | Quórum p/ Eleição (50%+1): 54
+ -> Presbíteros Eleitos: Nenhum atingiu o quórum
+ -> Diáconos Eleitos: Alexandre
+--------------------------------------------------
