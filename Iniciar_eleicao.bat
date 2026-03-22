@@ -24,7 +24,7 @@ echo.
 echo Iniciando a Urna Eletronica... 
 echo Se o navegador nao abrir sozinho, acesse: http://localhost:8501
 echo.
-streamlit run main_V2.0.py
+streamlit run VOTACAO_FINAL.py
 
 :: Esse pause impede a tela preta de fechar na sua cara se der erro
 pause
